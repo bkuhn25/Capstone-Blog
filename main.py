@@ -10,6 +10,7 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 from forms import CreatePostForm, UserForm, CommentForm
 from flask_gravatar import Gravatar
 from functools import wraps
+from decouple import config
 
 
 # Create admin-only decorator
@@ -25,7 +26,7 @@ def admin_only(f):
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = config("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
