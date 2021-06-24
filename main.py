@@ -11,7 +11,10 @@ from forms import CreatePostForm, UserForm, CommentForm
 from flask_gravatar import Gravatar
 from functools import wraps
 import os
+from dotenv import load_dotenv
 
+# this is only used when running on local computer
+load_dotenv()
 
 # Create admin-only decorator
 def admin_only(f):
@@ -70,7 +73,7 @@ class BlogPost(db.Model):
 
     # Create Foreign Key, "users.id" the users refers to the table name of User.
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    # Create reference to the User object, the "posts" refers to the posts protperty in the User class.
+    # Create reference to the User object, the "posts" refers to the posts property in the User class.
     author = relationship("User", back_populates="posts")
 
     title = db.Column(db.String(250), unique=True, nullable=False)
