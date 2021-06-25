@@ -12,6 +12,12 @@ from flask_gravatar import Gravatar
 from functools import wraps
 import os
 from dotenv import load_dotenv
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
+
+
+# /Users/ownerfounder/Desktop/Coding Class/Python Bootcamp/Day_63_SQL/venv/lib/python3.9/site-packages
+
 
 # this is only used when running on local computer
 load_dotenv()
@@ -52,6 +58,11 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
+migrate = Migrate(app, db, render_as_batch=True)
+manager = Manager(app)
+
+manager.add_command('db', MigrateCommand)
+
 ##CONFIGURE TABLES
 
 class User(db.Model, UserMixin):
@@ -84,6 +95,10 @@ class BlogPost(db.Model):
 
     # create relationship to comments table
     blog_comments = relationship("Comment", back_populates="parent_post")
+
+    test_field = db.Column(db.String(10), nullable=False, default="Testing", server_default="Testing")
+
+
 
 
 class Comment(db.Model):
@@ -254,8 +269,6 @@ def delete_post(post_id):
     return redirect(url_for('get_all_posts', current_user=current_user))
 
 
-
-
-
 if __name__ == "__main__":
-    app.run()
+    # app.run()
+    manager.run()
