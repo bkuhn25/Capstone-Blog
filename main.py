@@ -96,7 +96,7 @@ class BlogPost(db.Model):
     # create relationship to comments table
     blog_comments = relationship("Comment", back_populates="parent_post")
 
-    # test_field = db.Column(db.String(10), nullable=False, default="Testing", server_default="Testing")
+    test_field = db.Column(db.String(10), nullable=False, default="Testing", server_default="Testing")
 
 
 
@@ -270,5 +270,5 @@ def delete_post(post_id):
 
 
 if __name__ == "__main__":
-    # app.run()
-    manager.run()
+    app.run()
+    # manager.run()
